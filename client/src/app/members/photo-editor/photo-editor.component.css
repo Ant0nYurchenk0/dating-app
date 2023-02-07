@@ -1,0 +1,10 @@
+.nv-file-over{
+  border-color: var(--bs-success) !important;
+}
+.my-drop-zone{
+  border: solid 2px transparent;
+}
+input[type=file]{
+  color: transparent;
+  display: none;
+}
