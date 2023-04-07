@@ -3,16 +3,15 @@ using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class LIkesRepository : ILikesRepository
+public class LikesRepository : ILikesRepository
 {
 	private readonly DataContext _context;
 
-	public LIkesRepository(DataContext context)
+	public LikesRepository(DataContext context)
 	{
 		_context = context;
 	}
