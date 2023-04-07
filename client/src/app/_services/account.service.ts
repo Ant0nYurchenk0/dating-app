@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,9 @@ export class AccountService {
     );
   }
   setCurrentUser(user: User) {
+    user.roles = [];
+    const roles = this.getdecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -40,5 +44,8 @@ export class AccountService {
         return user;
       })
     );
+  }
+  getdecodedToken(token: string){
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }
