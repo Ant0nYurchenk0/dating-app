@@ -4,6 +4,7 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -61,15 +62,16 @@ public class UserRepository : IUserRepository
 		return await _context.Users.Include(u=>u.Photos).SingleOrDefaultAsync(x=>x.UserName == username);
 	}
 
-	public async Task<IEnumerable<AppUser>> GetUsersAsync()
+  public async Task<string> GetUserGender(string username)
+  {
+    return await _context.Users.Where(x=>x.UserName == username).Select(s=>s.Gender).FirstOrDefaultAsync();
+  }
+
+  public async Task<IEnumerable<AppUser>> GetUsersAsync()
 	{
 		return await _context.Users.Include(u=>u.Photos).ToListAsync();
 	}
 
-	public async Task<bool> SaveAllAsync()
-	{
-		return await _context.SaveChangesAsync() > 0;
-	}
 
 	public void Update(AppUser user)
 	{
